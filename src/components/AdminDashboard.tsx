@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
-import { Link } from 'react-router-dom';
 
 const AdminDashboard: React.FC = () => {
     const { items, tickets, currentUser } = useData();
@@ -78,7 +77,7 @@ const AdminDashboard: React.FC = () => {
 };
 
 const UserList = () => {
-    const { items, currentUser } = useData();
+    const { items } = useData();
     // In a real app we would have a users list in context, but for now we use the MOCK_USERS from the file scope 
     // or we need to expose users from context. DataContext exposes 'currentUser' but not all users.
     // I need to update DataContext to expose 'users' or just import MOCK_USERS if I exported it.
@@ -143,7 +142,7 @@ const statCardStyle = {
 
 // Sub-components (internal for now, could be separate files)
 const InventoryList = () => {
-    const { items, addItem } = useData();
+    const { items } = useData();
     const [showAddForm, setShowAddForm] = useState(false);
 
     // Form state...

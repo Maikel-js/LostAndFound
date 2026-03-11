@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
-import App from './App'
 import Layout from './components/Layout'
 import PublicHome from './components/PublicHome'
 import './global.css'

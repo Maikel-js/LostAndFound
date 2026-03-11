@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
-import { Item } from '../types';
 
 import { useNavigate } from 'react-router-dom';
 

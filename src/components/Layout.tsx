@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 // import { useData } from '../context/DataContext'; // Commented out to avoid linter noise until deps installed
-import { Link } from 'react-router-dom'; // Will need react-router-dom
 
 // Mock Link for now if router not installed
 const MockLink = ({ to, children, className }: any) => <a href={to} className={className}>{children}</a>;
