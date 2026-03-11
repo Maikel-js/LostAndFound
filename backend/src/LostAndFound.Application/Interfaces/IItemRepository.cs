@@ -1,0 +1,12 @@
+using LostAndFound.Domain.Entities;
+
+namespace LostAndFound.Application.Interfaces;
+
+public interface IItemRepository
+{
+    Task<Item?> GetByIdAsync(Guid id);
+    Task<IEnumerable<Item>> GetAllAsync();
+    Task<Item> AddAsync(Item item);
+    Task UpdateAsync(Item item);
+    Task DeleteAsync(Item item);
+}
