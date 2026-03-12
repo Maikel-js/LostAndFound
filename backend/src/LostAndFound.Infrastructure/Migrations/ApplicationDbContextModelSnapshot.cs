@@ -22,7 +22,7 @@ namespace LostAndFound.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("LostAndFound.Domain.Entities.Item", b =>
+            modelBuilder.Entity("LostAndFound.Domain.Entities.Claim", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -31,7 +31,60 @@ namespace LostAndFound.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("DateReported")
+                    b.Property<DateTime?>("DateResolved")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateSubmitted")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("FeatureDescription")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ItemId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LocationLost")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("ResolvedById")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("TimeLost")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Claims");
+                });
+
+            modelBuilder.Entity("LostAndFound.Domain.Entities.Item", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Category")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateFound")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
@@ -41,7 +94,7 @@ namespace LostAndFound.Infrastructure.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
-                    b.Property<string>("Location")
+                    b.Property<string>("LocationFound")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -111,6 +164,25 @@ namespace LostAndFound.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("LostAndFound.Domain.Entities.Claim", b =>
+                {
+                    b.HasOne("LostAndFound.Domain.Entities.Item", "Item")
+                        .WithMany("Claims")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LostAndFound.Domain.Entities.User", "User")
+                        .WithMany("Claims")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Item");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("LostAndFound.Domain.Entities.Item", b =>
                 {
                     b.HasOne("LostAndFound.Domain.Entities.User", "Reporter")
@@ -122,8 +194,15 @@ namespace LostAndFound.Infrastructure.Migrations
                     b.Navigation("Reporter");
                 });
 
+            modelBuilder.Entity("LostAndFound.Domain.Entities.Item", b =>
+                {
+                    b.Navigation("Claims");
+                });
+
             modelBuilder.Entity("LostAndFound.Domain.Entities.User", b =>
                 {
+                    b.Navigation("Claims");
+
                     b.Navigation("ReportedItems");
                 });
 #pragma warning restore 612, 618

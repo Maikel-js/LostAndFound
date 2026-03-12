@@ -17,15 +17,26 @@ public class CreateItemCommandHandler : IRequestHandler<CreateItemCommand, ItemR
 
     public async Task<ItemResponseDto> Handle(CreateItemCommand request, CancellationToken cancellationToken)
     {
+        if (string.IsNullOrWhiteSpace(request.Dto.Name) ||
+            string.IsNullOrWhiteSpace(request.Dto.Description) ||
+            string.IsNullOrWhiteSpace(request.Dto.Category) ||
+            string.IsNullOrWhiteSpace(request.Dto.LocationFound))
+        {
+            throw new ArgumentException("Datos inválidos para crear el objeto.");
+        }
+
         var item = new Item
         {
             Name = request.Dto.Name,
             Description = request.Dto.Description,
-            Location = request.Dto.Location,
+            Category = Enum.TryParse<ItemCategory>(request.Dto.Category, true, out var category)
+                ? category
+                : ItemCategory.Other,
+            LocationFound = request.Dto.LocationFound,
+            DateFound = request.Dto.DateFound,
             ImageUrl = request.Dto.ImageUrl,
-            ReporterId = request.Dto.ReporterId,
-            DateReported = DateTime.UtcNow,
-            Status = ItemStatus.Lost
+            ReporterId = request.ReporterId,
+            Status = ItemStatus.Found
         };
 
         var createdItem = await _itemRepository.AddAsync(item);
@@ -35,9 +46,10 @@ public class CreateItemCommandHandler : IRequestHandler<CreateItemCommand, ItemR
             Id = createdItem.Id,
             Name = createdItem.Name,
             Description = createdItem.Description,
-            Location = createdItem.Location,
+            Category = createdItem.Category.ToString(),
+            LocationFound = createdItem.LocationFound,
+            DateFound = createdItem.DateFound,
             ImageUrl = createdItem.ImageUrl,
-            DateReported = createdItem.DateReported,
             Status = createdItem.Status,
             ReporterId = createdItem.ReporterId
         };

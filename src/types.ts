@@ -1,15 +1,15 @@
-export type UserRole = 'student' | 'staff' | 'admin';
-export type ItemCategory = 'electronics' | 'clothing' | 'books' | 'keys' | 'other';
-export type ItemStatus = 'found' | 'claimed' | 'archived';
-export type TicketStatus = 'pending' | 'approved' | 'rejected';
+export type UserRole = 'Student' | 'Administrator';
+export type ItemCategory = 'Electronics' | 'Clothing' | 'Books' | 'Keys' | 'Other';
+export type ItemStatus = 'Found' | 'Returned' | 'Lost';
+export type ClaimStatus = 'Pending' | 'Approved' | 'Rejected';
 
 export interface User {
     id: string;
-    name: string;
+    firstName: string;
+    lastName: string;
     role: UserRole;
     email: string;
-    department?: string; // For staff
-    studentId?: string; // For students
+    enrollmentNumber: string;
 }
 
 export interface Item {
@@ -21,19 +21,20 @@ export interface Item {
     locationFound: string;
     status: ItemStatus;
     imageUrl?: string;
-    features: string[]; // Key identifiers e.g. "Blue cover", "Scratch on back"
-    claimedBy?: string; // User ID
+    reporterId: string;
 }
 
-export interface Ticket {
+export interface Claim {
     id: string;
     itemId: string;
+    itemName: string;
     userId: string;
-    status: TicketStatus;
+    userName: string;
+    userEmail: string;
+    status: ClaimStatus;
     dateSubmitted: string;
-    answers: {
-        featureDescription: string;
-        locationLost: string;
-        timeLost: string;
-    };
+    dateResolved?: string;
+    featureDescription: string;
+    locationLost: string;
+    timeLost: string;
 }

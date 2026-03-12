@@ -1,14 +1,14 @@
 import React, { ReactNode } from 'react';
-// import { useData } from '../context/DataContext'; // Commented out to avoid linter noise until deps installed
-
-// Mock Link for now if router not installed
-const MockLink = ({ to, children, className }: any) => <a href={to} className={className}>{children}</a>;
+import { NavLink } from 'react-router-dom';
+import { useData } from '../context/DataContext';
 
 interface LayoutProps {
     children: ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+    const { currentUser, logout } = useData();
+
     return (
         <div className="app-layout">
             <nav style={{
@@ -21,8 +21,17 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             }}>
                 <div style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>School Lost & Found</div>
                 <div style={{ display: 'flex', gap: '1rem' }}>
-                    <MockLink to="/" className="btn" style={{ color: 'white' }}>Home</MockLink>
-                    <MockLink to="/admin" className="btn" style={{ color: 'white' }}>Admin</MockLink>
+                    <NavLink to="/" className="btn" style={{ color: 'white' }}>Home</NavLink>
+                    {currentUser?.role === 'Administrator' && (
+                        <NavLink to="/admin" className="btn" style={{ color: 'white' }}>Admin</NavLink>
+                    )}
+                    {!currentUser ? (
+                        <NavLink to="/login" className="btn" style={{ color: 'white' }}>Login</NavLink>
+                    ) : (
+                        <button className="btn" style={{ color: 'white' }} onClick={logout}>
+                            Logout
+                        </button>
+                    )}
                 </div>
             </nav>
             <main style={{ padding: '2rem' }}>

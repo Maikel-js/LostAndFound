@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useData } from '../context/DataContext';
 
 const ClaimItemPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
-    const { items, createTicket, currentUser } = useData();
+    const { items, createClaim, currentUser } = useData();
     const navigate = useNavigate();
 
     const item = items.find(i => i.id === id);
@@ -17,14 +17,23 @@ const ClaimItemPage: React.FC = () => {
 
     if (!item) return <div>Item not found</div>;
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!currentUser) return alert('Please login first');
+    if (!currentUser) {
+        return (
+            <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+                <h2>Login requerido</h2>
+                <p className="text-muted">Debes iniciar sesión para reclamar un objeto.</p>
+                <Link to="/login" className="btn btn-primary">Ir al login</Link>
+            </div>
+        );
+    }
 
-        createTicket({
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        await createClaim({
             itemId: item.id,
-            userId: currentUser.id,
-            answers
+            featureDescription: answers.featureDescription,
+            locationLost: answers.locationLost,
+            timeLost: new Date(answers.timeLost).toISOString()
         });
 
         alert('Claim submitted successfully! Check status in profile.');

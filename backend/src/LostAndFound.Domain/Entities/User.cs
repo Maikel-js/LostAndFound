@@ -14,4 +14,7 @@ public class User : BaseEntity
 
     // Relación: Un usuario puede reportar muchos objetos
     public ICollection<Item> ReportedItems { get; set; } = new List<Item>();
+
+    // Relación: Un usuario puede crear muchos reclamos
+    public ICollection<Claim> Claims { get; set; } = new List<Claim>();
 }

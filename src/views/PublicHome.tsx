@@ -1,22 +1,24 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useData } from '../context/DataContext';
 
 import { useNavigate } from 'react-router-dom';
 
 const PublicHome: React.FC = () => {
-    const { items } = useData();
+    const { items, loading, error } = useData();
     const [searchTerm, setSearchTerm] = useState('');
     const [categoryFilter, setCategoryFilter] = useState<string>('all');
     const navigate = useNavigate();
 
-    const filteredItems = items.filter(item => {
-        const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.description.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesCategory = categoryFilter === 'all' || item.category === categoryFilter;
-        const isFoundAndUnclaimed = item.status === 'found'; // Only show found items
+    const filteredItems = useMemo(() => {
+        return items.filter(item => {
+            const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                item.description.toLowerCase().includes(searchTerm.toLowerCase());
+            const matchesCategory = categoryFilter === 'all' || item.category === categoryFilter;
+            const isFoundAndUnclaimed = item.status === 'Found';
 
-        return matchesSearch && matchesCategory && isFoundAndUnclaimed;
-    });
+            return matchesSearch && matchesCategory && isFoundAndUnclaimed;
+        });
+    }, [items, searchTerm, categoryFilter]);
 
     return (
         <div>
@@ -36,14 +38,17 @@ const PublicHome: React.FC = () => {
                         style={{ padding: '0.5rem', borderRadius: '4px', border: '1px solid var(--color-border)' }}
                     >
                         <option value="all">All Categories</option>
-                        <option value="electronics">Electronics</option>
-                        <option value="clothing">Clothing</option>
-                        <option value="books">Books</option>
-                        <option value="keys">Keys</option>
-                        <option value="other">Other</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Clothing">Clothing</option>
+                        <option value="Books">Books</option>
+                        <option value="Keys">Keys</option>
+                        <option value="Other">Other</option>
                     </select>
                 </div>
             </div>
+
+            {loading && <p className="text-muted">Cargando objetos...</p>}
+            {error && <p style={{ color: 'var(--color-danger)' }}>{error}</p>}
 
             <div style={{
                 display: 'grid',

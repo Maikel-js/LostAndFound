@@ -8,11 +8,17 @@ using LostAndFound.Infrastructure.Data;
 using LostAndFound.Infrastructure.Repositories;
 using LostAndFound.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 // builder.Services.AddEndpointsApiExplorer();
 // builder.Services.AddSwaggerGen();
 
@@ -20,8 +26,22 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins(builder.Configuration["AllowedOrigins"]?.Split(',') ?? ["http://localhost:5173", "http://localhost:3000"])
-              .AllowAnyHeader()
+        var originsConfig = builder.Configuration["AllowedOrigins"];
+        if (string.IsNullOrWhiteSpace(originsConfig))
+        {
+            policy.AllowAnyOrigin();
+        }
+        else
+        {
+            var origins = originsConfig.Split(',')
+                .Select(origin => origin.Trim())
+                .Where(origin => !string.IsNullOrWhiteSpace(origin))
+                .ToArray();
+
+            policy.WithOrigins(origins);
+        }
+
+        policy.AllowAnyHeader()
               .AllowAnyMethod();
     });
 });
@@ -33,6 +53,7 @@ builder.Services.AddApplication();
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IClaimRepository, ClaimRepository>();
 
 // Configure Entity Framework Core with PostgreSQL
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -57,19 +78,41 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+using (var scope = app.Services.CreateScope())
 {
-    // app.UseSwagger();
-    // app.UseSwaggerUI();
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await DbInitializer.SeedAsync(db);
 }
-else
+
+// Configure the HTTP request pipeline.
+app.UseExceptionHandler(appError =>
 {
-    app.UseExceptionHandler("/error");
+    appError.Run(async context =>
+    {
+        var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
+        if (exception is ArgumentException or InvalidOperationException)
+        {
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+        }
+        else
+        {
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+        }
+
+        context.Response.ContentType = "application/json";
+        await context.Response.WriteAsJsonAsync(new { message = exception?.Message ?? "Unexpected error" });
+    });
+});
+
+if (!app.Environment.IsDevelopment())
+{
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 app.UseCors("AllowFrontend");
 
 // El orden aquí es vital para la seguridad

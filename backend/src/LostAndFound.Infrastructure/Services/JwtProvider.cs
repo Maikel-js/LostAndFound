@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using JwtClaim = System.Security.Claims.Claim;
 using System.Text;
 using LostAndFound.Application.Interfaces.Auth;
 using LostAndFound.Domain.Entities;
@@ -24,10 +25,11 @@ public class JwtProvider : IJwtProvider
 
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email),
-            new Claim("FirstName", user.FirstName),
-            new Claim(ClaimTypes.Role, user.Role.ToString())
+            new JwtClaim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new JwtClaim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new JwtClaim(JwtRegisteredClaimNames.Email, user.Email),
+            new JwtClaim("FirstName", user.FirstName),
+            new JwtClaim(ClaimTypes.Role, user.Role.ToString())
         };
 
         var token = new JwtSecurityToken(

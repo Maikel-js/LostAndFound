@@ -22,9 +22,10 @@ public class GetItemsQueryHandler : IRequestHandler<GetItemsQuery, IEnumerable<I
             Id = item.Id,
             Name = item.Name,
             Description = item.Description,
-            Location = item.Location,
+            Category = item.Category.ToString(),
+            LocationFound = item.LocationFound,
+            DateFound = item.DateFound,
             ImageUrl = item.ImageUrl,
-            DateReported = item.DateReported,
             Status = item.Status,
             ReporterId = item.ReporterId
         });

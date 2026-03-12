@@ -6,9 +6,11 @@ namespace LostAndFound.Application.Features.Items.Commands.CreateItem;
 public class CreateItemCommand : IRequest<ItemResponseDto>
 {
     public CreateItemDto Dto { get; set; }
+    public Guid ReporterId { get; set; }
 
-    public CreateItemCommand(CreateItemDto dto)
+    public CreateItemCommand(CreateItemDto dto, Guid reporterId)
     {
         Dto = dto;
+        ReporterId = reporterId;
     }
 }

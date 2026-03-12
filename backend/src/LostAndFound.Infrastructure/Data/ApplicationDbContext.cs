@@ -12,6 +12,7 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<User> Users => Set<User>();
     public DbSet<Item> Items => Set<Item>();
+    public DbSet<Claim> Claims => Set<Claim>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -21,6 +22,18 @@ public class ApplicationDbContext : DbContext
             .HasMany(u => u.ReportedItems)
             .WithOne(i => i.Reporter)
             .HasForeignKey(i => i.ReporterId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Claims)
+            .WithOne(c => c.User)
+            .HasForeignKey(c => c.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Item>()
+            .HasMany(i => i.Claims)
+            .WithOne(c => c.Item)
+            .HasForeignKey(c => c.ItemId)
             .OnDelete(DeleteBehavior.Cascade);
             
         modelBuilder.Entity<User>()

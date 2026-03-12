@@ -21,6 +21,25 @@ public class ItemRepository : IItemRepository
             .FirstOrDefaultAsync(i => i.Id == id);
     }
 
+    public async Task<Item?> GetByIdAsync(Guid id, bool includeClaims)
+    {
+        var query = _context.Items.AsQueryable();
+
+        if (includeClaims)
+        {
+            query = query
+                .Include(i => i.Reporter)
+                .Include(i => i.Claims)
+                    .ThenInclude(c => c.User);
+        }
+        else
+        {
+            query = query.Include(i => i.Reporter);
+        }
+
+        return await query.FirstOrDefaultAsync(i => i.Id == id);
+    }
+
     public async Task<IEnumerable<Item>> GetAllAsync()
     {
         return await _context.Items
