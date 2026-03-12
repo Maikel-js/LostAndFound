@@ -1,0 +1,57 @@
+Using project '/home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.Infrastructure/LostAndFound.Infrastructure.csproj'.
+Using startup project '/home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.API/LostAndFound.API.csproj'.
+dotnet msbuild /target:GetEFProjectMetadata /property:EFProjectMetadataFile=/tmp/tmp00aClE.tmp /verbosity:quiet /nologo /home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.Infrastructure/LostAndFound.Infrastructure.csproj
+dotnet msbuild /target:GetEFProjectMetadata /property:EFProjectMetadataFile=/tmp/tmpdbql3g.tmp /verbosity:quiet /nologo /home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.API/LostAndFound.API.csproj
+Build started...
+dotnet build /home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.API/LostAndFound.API.csproj /verbosity:quiet /nologo /p:PublishAot=false
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:15.24
+
+Build succeeded.
+dotnet exec --depsfile /home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.API/bin/Debug/net10.0/LostAndFound.API.deps.json --additionalprobingpath /home/eacm/.nuget/packages --runtimeconfig /home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.API/bin/Debug/net10.0/LostAndFound.API.runtimeconfig.json /home/eacm/.dotnet/tools/.store/dotnet-ef/9.0.0/dotnet-ef/9.0.0/tools/net8.0/any/tools/netcoreapp2.0/any/ef.dll migrations add InitialCreate --assembly /home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.API/bin/Debug/net10.0/LostAndFound.Infrastructure.dll --project /home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.Infrastructure/LostAndFound.Infrastructure.csproj --startup-assembly /home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.API/bin/Debug/net10.0/LostAndFound.API.dll --startup-project /home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.API/LostAndFound.API.csproj --project-dir /home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.Infrastructure/ --root-namespace LostAndFound.Infrastructure --language C# --framework net10.0 --nullable --working-dir /home/eacm/Proyects/LostAndFound/backend --verbose
+Using assembly 'LostAndFound.Infrastructure'.
+Using startup assembly 'LostAndFound.API'.
+Using application base '/home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.API/bin/Debug/net10.0'.
+Using working directory '/home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.API'.
+Using root namespace 'LostAndFound.Infrastructure'.
+Using project directory '/home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.Infrastructure/'.
+Remaining arguments: .
+The Entity Framework tools version '9.0.0' is older than that of the runtime '10.0.4'. Update the tools for the latest features and bug fixes. See https://aka.ms/AAc1fbw for more information.
+Finding DbContext classes...
+Using environment 'Development'.
+Finding IDesignTimeDbContextFactory implementations...
+Finding DbContext classes in the project...
+Found DbContext 'ApplicationDbContext'.
+Finding application service provider in assembly 'LostAndFound.API'...
+Finding Microsoft.Extensions.Hosting service provider...
+System.TypeLoadException: Method 'GetSwagger' in type 'Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator' from assembly 'Swashbuckle.AspNetCore.SwaggerGen, Version=7.2.0.0, Culture=neutral, PublicKeyToken=d84d99fb0135530a' does not have an implementation.
+   at Microsoft.Extensions.DependencyInjection.SwaggerGenServiceCollectionExtensions.AddSwaggerGen(IServiceCollection services, Action`1 setupAction)
+   at Program.<Main>$(String[] args) in /home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.API/Program.cs:line 17
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+--- End of stack trace from previous location ---
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.CreateHost()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.<>c__DisplayClass10_0.<ResolveHostFactory>b__0(String[] args)
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.<>c__DisplayClass13_0.<ResolveServiceProviderFactory>b__3(String[] args)
+   at Microsoft.EntityFrameworkCore.Design.Internal.AppServiceProviderFactory.CreateFromHosting(String[] args)
+An error occurred while accessing the Microsoft.Extensions.Hosting services. Continuing without the application service provider. Error: Method 'GetSwagger' in type 'Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator' from assembly 'Swashbuckle.AspNetCore.SwaggerGen, Version=7.2.0.0, Culture=neutral, PublicKeyToken=d84d99fb0135530a' does not have an implementation.
+No application service provider was found.
+Microsoft.EntityFrameworkCore.Design.OperationException: Unable to create a 'DbContext' of type 'ApplicationDbContext'. The exception 'Unable to resolve service for type 'Microsoft.EntityFrameworkCore.DbContextOptions`1[LostAndFound.Infrastructure.Data.ApplicationDbContext]' while attempting to activate 'LostAndFound.Infrastructure.Data.ApplicationDbContext'.' was thrown while attempting to create an instance. For the different patterns supported at design time, see https://go.microsoft.com/fwlink/?linkid=851728
+ ---> System.InvalidOperationException: Unable to resolve service for type 'Microsoft.EntityFrameworkCore.DbContextOptions`1[LostAndFound.Infrastructure.Data.ApplicationDbContext]' while attempting to activate 'LostAndFound.Infrastructure.Data.ApplicationDbContext'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ConstructorMatcher.CreateInstance(IServiceProvider provider)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance(IServiceProvider provider, Type instanceType, Object[] parameters)
+   at Microsoft.EntityFrameworkCore.Design.Internal.DbContextOperations.<>c__DisplayClass28_0.<CreateContextFromServiceProvider>b__0()
+   at Microsoft.EntityFrameworkCore.Design.Internal.DbContextOperations.CreateContext(String contextType, KeyValuePair`2 contextPair)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Design.Internal.DbContextOperations.CreateContext(String contextType, KeyValuePair`2 contextPair)
+   at Microsoft.EntityFrameworkCore.Design.Internal.DbContextOperations.CreateContext(String contextType)
+   at Microsoft.EntityFrameworkCore.Design.Internal.MigrationsOperations.AddMigration(String name, String outputDir, String contextType, String namespace, Boolean dryRun)
+   at Microsoft.EntityFrameworkCore.Design.OperationExecutor.AddMigrationImpl(String name, String outputDir, String contextType, String namespace, Boolean dryRun)
+   at Microsoft.EntityFrameworkCore.Design.OperationExecutor.AddMigration.<>c__DisplayClass0_0.<.ctor>b__0()
+   at Microsoft.EntityFrameworkCore.Design.OperationExecutor.OperationBase.<>c__DisplayClass3_0`1.<Execute>b__0()
+   at Microsoft.EntityFrameworkCore.Design.OperationExecutor.OperationBase.Execute(Action action)
+Unable to create a 'DbContext' of type 'ApplicationDbContext'. The exception 'Unable to resolve service for type 'Microsoft.EntityFrameworkCore.DbContextOptions`1[LostAndFound.Infrastructure.Data.ApplicationDbContext]' while attempting to activate 'LostAndFound.Infrastructure.Data.ApplicationDbContext'.' was thrown while attempting to create an instance. For the different patterns supported at design time, see https://go.microsoft.com/fwlink/?linkid=851728

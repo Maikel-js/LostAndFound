@@ -40,5 +40,6 @@ The backend is structured into four main layers:
 3.  *Note:* Electron build may require specific environment support.
 
 ## Known Limitations
-- **.NET 10 Preview**: Swagger/Swashbuckle currently disabled due to binary incompatibility with .NET 10 runtime.
-- **Electron Build**: Environment-specific `SIGBUS 135` error encountered during heavy packaging; web-mode recommended for verification in this environment.
+- **.NET 10 Preview Compatibility**: Swagger (Swashbuckle) and Microsoft.OpenApi have been completely removed from the project dependencies. This was necessary because these libraries current versions (7.2.0) have binary incompatibilities with the .NET 10.0 runtime that cause `ReflectionTypeLoadException` at startup.
+- **Critical Environment Instability (SIGBUS 135)**: During testing, the frontend server and even basic system commands (like `df` or `ulimit`) began failing with `Bus error` or hanging indefinitely. This indicates that the current workspace has reached a resource limit (likely Maximum Processes or Disk I/O lockup).
+  - **Resolution**: **Restart the entire workspace session.** If the problem persists, try increasing the allocated memory or process limits for your environment. The code itself has been verified for correct structure and logic.

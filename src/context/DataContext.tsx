@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { User, Item, Ticket, ItemCategory, ItemStatus } from '../types';
+import { User, Item, Ticket } from '../types';
 
 interface DataContextType {
     currentUser: User | null;

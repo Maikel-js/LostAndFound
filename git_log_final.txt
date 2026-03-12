@@ -1,0 +1,40 @@
+b676dfd docs: add technical report and architectural overview
+5c48000 feat: configure production environment and optimizations
+61f9e90 feat: add initial database migrations
+98fdade feat: implement JWT authentication and secure middleware
+b851873 feat: add API service for backend communication
+49376b1 feat: implement main UI components and layout
+f895591 feat: implement API controllers and startup configuration
+cd8ef46 feat: implement infrastructure layer with EF Core and Repositories
+7b303d7 feat: add application interfaces and dependency injection
+1265ab5 feat: implement core domain entities
+5a74979 feat: initialize project structure and base configuration
+1947c1f Initial commit: Lost and Found system (Electron + Vite + TypeScript setup)
+ M electron/main.ts
+ M src/context/DataContext.tsx
+?? backend/LostAndFound.Backend.slnx
+?? backend/build_log.txt
+?? backend/migration_debug.log
+?? backend/migration_final.log
+?? backend/src/LostAndFound.API/LostAndFound.API.csproj
+?? backend/src/LostAndFound.API/LostAndFound.API.http
+?? backend/src/LostAndFound.API/Properties/
+?? backend/src/LostAndFound.API/appsettings.Development.json
+?? backend/src/LostAndFound.API/appsettings.json
+?? backend/src/LostAndFound.API/bin/
+?? backend/src/LostAndFound.API/obj/
+?? backend/src/LostAndFound.Application/DTOs/
+?? backend/src/LostAndFound.Application/Features/
+?? backend/src/LostAndFound.Application/Interfaces/Auth/
+?? backend/src/LostAndFound.Application/LostAndFound.Application.csproj
+?? backend/src/LostAndFound.Application/bin/
+?? backend/src/LostAndFound.Application/obj/
+?? backend/src/LostAndFound.Domain/Common/
+?? backend/src/LostAndFound.Domain/Enums/
+?? backend/src/LostAndFound.Domain/LostAndFound.Domain.csproj
+?? backend/src/LostAndFound.Domain/bin/
+?? backend/src/LostAndFound.Domain/obj/
+?? backend/src/LostAndFound.Infrastructure/LostAndFound.Infrastructure.csproj
+?? backend/src/LostAndFound.Infrastructure/bin/
+?? backend/src/LostAndFound.Infrastructure/obj/
+?? git_log_final.txt

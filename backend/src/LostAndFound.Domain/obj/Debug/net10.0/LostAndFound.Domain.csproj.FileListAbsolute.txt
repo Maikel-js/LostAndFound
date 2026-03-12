@@ -1,0 +1,12 @@
+/home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.Domain/bin/Debug/net10.0/LostAndFound.Domain.deps.json
+/home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.Domain/bin/Debug/net10.0/LostAndFound.Domain.dll
+/home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.Domain/bin/Debug/net10.0/LostAndFound.Domain.pdb
+/home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.Domain/obj/Debug/net10.0/LostAndFound.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.Domain/obj/Debug/net10.0/LostAndFound.Domain.AssemblyInfoInputs.cache
+/home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.Domain/obj/Debug/net10.0/LostAndFound.Domain.AssemblyInfo.cs
+/home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.Domain/obj/Debug/net10.0/LostAndFound.Domain.csproj.CoreCompileInputs.cache
+/home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.Domain/obj/Debug/net10.0/LostAndFound.Domain.sourcelink.json
+/home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.Domain/obj/Debug/net10.0/LostAndFound.Domain.dll
+/home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.Domain/obj/Debug/net10.0/refint/LostAndFound.Domain.dll
+/home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.Domain/obj/Debug/net10.0/LostAndFound.Domain.pdb
+/home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.Domain/obj/Debug/net10.0/ref/LostAndFound.Domain.dll
