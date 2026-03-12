@@ -1,0 +1,12 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  LostAndFound.Domain -> /home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.Domain/bin/Debug/net10.0/LostAndFound.Domain.dll
+  LostAndFound.Application -> /home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.Application/bin/Debug/net10.0/LostAndFound.Application.dll
+  LostAndFound.Infrastructure -> /home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.Infrastructure/bin/Debug/net10.0/LostAndFound.Infrastructure.dll
+  LostAndFound.API -> /home/eacm/Proyects/LostAndFound/backend/src/LostAndFound.API/bin/Debug/net10.0/LostAndFound.API.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.99
